@@ -9,7 +9,7 @@ import lightning as L
 from lightning import Trainer
 from lightning.pytorch.callbacks.early_stopping import EarlyStopping
 from lightning.pytorch.callbacks import RichProgressBar
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 
 train = []
 for x1 in range(2, 10):
@@ -95,7 +95,7 @@ trainer = Trainer(
 trainer.fit(pytorch_model, dataloader)
 
 train['predict'] = pytorch_model(FloatTensor(train[['x1', 'x2']].values)).detach().numpy()
-print(mean_squared_error(train['y'], train['predict'], squared=False))
+print(root_mean_squared_error(train['y'], train['predict']))
 
 test['predict'] = pytorch_model(FloatTensor(test[['x1', 'x2']].values)).detach().numpy()
-print(mean_squared_error(test['y'], test['predict'], squared=False))
+print(root_mean_squared_error(test['y'], test['predict']))

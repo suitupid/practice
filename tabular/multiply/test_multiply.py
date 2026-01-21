@@ -20,7 +20,7 @@ for x1 in range(102, 110):
 test = pd.DataFrame(test, columns=['x1', 'x2', 'y'])
 
 # Create dataframe for result
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 from sklearn.metrics import r2_score
 result = pd.DataFrame()
 
@@ -36,11 +36,11 @@ test['predict_linear'] = linear_model.predict(test[['x1','x2']])
 result.loc['Linear', 'R-Squared(train)'] = \
     r2_score(train['y'], train['predict_linear'])
 result.loc['Linear', 'RMSE(train)'] = \
-    mean_squared_error(train['y'], train['predict_linear'], squared=False)
+    root_mean_squared_error(train['y'], train['predict_linear'])
 result.loc['Linear', 'R-Squared(test)'] = \
     r2_score(test['y'], test['predict_linear'])
 result.loc['Linear', 'RMSE(test)'] = \
-    mean_squared_error(test['y'], test['predict_linear'], squared=False)
+    root_mean_squared_error(test['y'], test['predict_linear'])
 
 # GBM
 from xgboost import XGBRegressor
@@ -56,11 +56,11 @@ test['predict_gbm'] = test['predict_gbm'].round(1)
 result.loc['GBM', 'R-Squared(train)'] = \
     r2_score(train['y'], train['predict_gbm'])
 result.loc['GBM', 'RMSE(train)'] = \
-    mean_squared_error(train['y'], train['predict_gbm'], squared=False)
+    root_mean_squared_error(train['y'], train['predict_gbm'])
 result.loc['GBM', 'R-Squared(test)'] = \
     r2_score(test['y'], test['predict_gbm'])
 result.loc['GBM', 'RMSE(test)'] = \
-    mean_squared_error(test['y'], test['predict_gbm'], squared=False)
+    root_mean_squared_error(test['y'], test['predict_gbm'])
 
 # Neural Network - Pytorch
 import torch
@@ -121,11 +121,11 @@ test['predict_nn'] = \
 result.loc['NN', 'R-Squared(train)'] = \
     r2_score(train['y'], train['predict_nn'])
 result.loc['NN', 'RMSE(train)'] = \
-    mean_squared_error(train['y'], train['predict_nn'], squared=False)
+    root_mean_squared_error(train['y'], train['predict_nn'])
 result.loc['NN', 'R-Squared(test)'] = \
     r2_score(test['y'], test['predict_nn'])
 result.loc['NN', 'RMSE(test)'] = \
-    mean_squared_error(test['y'], test['predict_nn'], squared=False)
+    root_mean_squared_error(test['y'], test['predict_nn'])
 
 print(train)
 print(test)
