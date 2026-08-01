@@ -4,21 +4,25 @@
 import os
 import json
 import joblib
+from multiprocessing import Process, Manager, Pool
 
 import cv2
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-from multiprocessing import Process, Manager, Pool
+
 
 data_info_path = 'data/raw/handwriting_data_info_clean.json'
 os.mkdir('data/final') if not os.path.isdir('data/final') else False
 
-target = open('data/targetSyllable.txt','r').read().replace('\n', '')
+with open('data/targetSyllable.txt', 'r') as f:
+    target = f.read().replace('\n', '')
 label_encoder = LabelEncoder().fit(list(target))
-joblib.dump(label_encoder, open('data/labelEncoder.bin','wb'))
+with open('data/labelEncoder.bin','wb') as f:
+    joblib.dump(label_encoder, f)
 
-data_info_raw = json.loads(open(data_info_path,'r').read())
+with open(data_info_path,'r') as f:
+    data_info_raw = json.loads(f.read())
 data_info = [
     item for item in data_info_raw['annotations']
     if item['attributes']['type']=='글자(음절)'
@@ -44,22 +48,23 @@ def func(item):
     img = img[row_min:row_max, col_min:col_max]
     if len(img)>0:
         img = cv2.resize(img, dsize=(54,54))
-        img = cv2.copyMakeBorder(img, 5, 5, 5, 5, cv2.BORDER_CONSTANT, value=[0])
+        img = cv2.copyMakeBorder(
+            img, 5, 5, 5, 5,
+            cv2.BORDER_CONSTANT,
+            value=[0]
+        )
         img = cv2.cvtColor(img, cv2.IMREAD_COLOR)
         save_path = fpath.replace('/raw/', '/final/')
         # cv2.imwrite(save_path, img)
         encoder = joblib.load('data/labelEncoder.bin')
         label = encoder.transform([label]).tolist()
         return [save_path, label]
-pool = Pool(5)
+pool = Pool(8)
 data_info = pool.map(func, data_info)
 pool.close()
 pool.join()
 
 data_info = [item for item in data_info if item is not None]
 
-json.dump(
-    data_info,
-    open('data/dataInfo.json', 'w'),
-    ensure_ascii=False
-)
+with open('data/dataInfo.json', 'w') as f:
+    json.dump(data_info, f, ensure_ascii=False)
