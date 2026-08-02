@@ -41,5 +41,4 @@ trainer = Trainer(
 )
 trainer.fit(model, train_dataloader, valid_dataloader)
 
-
 torch.save(model.state_dict(), 'model/hangulClassifier.pt')
