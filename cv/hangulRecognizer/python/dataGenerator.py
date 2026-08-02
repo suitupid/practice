@@ -4,7 +4,7 @@
 import os
 import json
 import joblib
-from multiprocessing import Process, Manager, Pool
+from multiprocessing import Process, Pool
 
 import cv2
 import numpy as np
@@ -55,7 +55,7 @@ def func(item):
         )
         img = cv2.cvtColor(img, cv2.IMREAD_COLOR)
         save_path = fpath.replace('/raw/', '/final/')
-        # cv2.imwrite(save_path, img)
+        cv2.imwrite(save_path, img)
         encoder = joblib.load('data/labelEncoder.bin')
         label = encoder.transform([label]).tolist()
         return [save_path, label]
