@@ -17,9 +17,9 @@ os.mkdir('data/final') if not os.path.isdir('data/final') else False
 
 with open('data/targetSyllable.txt', 'r') as f:
     target = f.read().replace('\n', '')
-label_encoder = LabelEncoder().fit(list(target))
+encoder = LabelEncoder().fit(list(target))
 with open('data/labelEncoder.bin','wb') as f:
-    joblib.dump(label_encoder, f)
+    joblib.dump(encoder, f)
 
 with open(data_info_path,'r') as f:
     data_info_raw = json.loads(f.read())
