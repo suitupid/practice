@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 
-from typing import Union
 from fastapi import FastAPI
 
 from inference import Inference
