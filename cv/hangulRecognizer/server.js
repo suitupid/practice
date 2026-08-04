@@ -7,6 +7,7 @@ let fs = require("fs");
 
 app.use("/css", express.static("css"));
 app.use("/js", express.static("js"));
+app.use(express.static(__dirname));
 
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/index.html");
