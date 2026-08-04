@@ -28,7 +28,7 @@ function loadInit() {
         console.log("Connected.");
         socket.on("response_"+socket.id, (data)=>{
             resultText.innerHTML = data;
-            console.log("Get Response.");
+            console.log("Responsed.");
         });
     });
 }
