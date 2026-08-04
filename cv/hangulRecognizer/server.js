@@ -36,7 +36,7 @@ io.on("connection", function(socket) {
                 respData = respData.replace(/"/g, '');
                 io.emit("response_"+socket.id, respData.toString());
                 fs.rmSync(filePath);
-                console.log("Responsed: "+socket.id+"("+address+")");
+                console.log("Get Response: "+socket.id+"("+address+")");
             });
         }).end();
     });
