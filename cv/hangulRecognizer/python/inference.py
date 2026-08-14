@@ -13,11 +13,9 @@ from model import CustomNetwork
 
 torch.backends.mkldnn.enabled = False
 
-class Inference():
+class Inference:
 
     def __init__(self):
-        super().__init__()
-
         self.model = CustomNetwork()
         self.model.load_state_dict(torch.load('model/hangulClassifier.pt'))
         self.model.eval()
@@ -36,7 +34,8 @@ class Inference():
         img = np.array(img, dtype=np.float32)
         return img
 
-    def predict(self, img):
+    def predict(self, image_path):
+        img = self.preprocess(image_path)
         img = torch.from_numpy(img)
         result = np.argmax(self.model(img).detach().numpy())
         result = self.encoder.inverse_transform([result])[0][0]

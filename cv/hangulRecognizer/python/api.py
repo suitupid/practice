@@ -11,6 +11,5 @@ app = FastAPI()
 @app.get("/predict/{image_name}")
 def get_result(image_name):
     image_path = 'image/'+image_name
-    img = tool.preprocess(image_path)
-    result = tool.predict(img)
+    result = tool.predict(image_path)
     return result
