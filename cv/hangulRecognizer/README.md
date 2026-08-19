@@ -21,4 +21,4 @@
   - ResNet 구조를 작은 이미지에 맞게 커스터마이징
   - 사용 기술: pytorch(lightning)
 ### 서비스 URL
-http://129.225.128.163:3000
+http://suitupid.cafe24.com:3000
