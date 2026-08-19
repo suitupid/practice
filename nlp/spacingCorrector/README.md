@@ -24,4 +24,4 @@
   - 클래스 간 weight 설정 
   - 사용 기술: pytorch(lightning)
 ### 서비스 URL
-http://suitupid.cafe24.com:3001
+http://129.225.128.163:3001
